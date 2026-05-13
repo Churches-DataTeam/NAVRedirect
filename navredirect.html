@@ -7,7 +7,11 @@
     const url = params.get("url");
     if (url) window.location = decodeURIComponent(url);
     setTimeout(() => {
-        document.getElementById("msg").innerText = "You can close this tab.";
+        window.close();
+        // If window.close() failed, show the message
+        setTimeout(() => {
+            document.getElementById("msg").innerText = "You can close this tab.";
+        }, 500);
     }, 5000);
 </script>
 </body>
