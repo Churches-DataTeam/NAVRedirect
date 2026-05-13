@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+<body>
+<script>
+    const params = new URLSearchParams(window.location.search);
+    const url = params.get("url");
+    if (url) window.location = decodeURIComponent(url);
+</script>
+<p>Opening NAV, please wait...</p>
+</body>
+</html>
