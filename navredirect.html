@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html>
 <body>
+<p id="msg">Opening NAV, please wait...</p>
 <script>
     const params = new URLSearchParams(window.location.search);
     const url = params.get("url");
     if (url) window.location = decodeURIComponent(url);
-    setTimeout(() => window.close(), 5000);
+    setTimeout(() => {
+        document.getElementById("msg").innerText = "You can close this tab.";
+    }, 5000);
 </script>
-<p>Opening NAV, please wait...</p>
 </body>
 </html>
