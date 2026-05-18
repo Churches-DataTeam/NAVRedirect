@@ -2,17 +2,50 @@
 <html>
 <body>
 <h1 id="msg">Opening NAV, please wait...</h1>
+
 <script>
     const params = new URLSearchParams(window.location.search);
-    const url = params.get("url");
-    if (url) window.location = decodeURIComponent(url);
+    const urlParam = params.get("url");
+
+    // ✅ List of allowed domains
+    const allowedDomains = [
+        "example.com",
+        "subdomain.example.com"
+    ];
+
+    function isAllowed(url) {
+        try {
+            const parsed = new URL(url);
+
+            return allowedDomains.some(domain =>
+                parsed.hostname === domain ||
+                parsed.hostname.endsWith("." + domain)
+            );
+        } catch {
+            return false;
+        }
+    }
+
+    if (urlParam) {
+        const decodedUrl = decodeURIComponent(urlParam);
+
+        if (isAllowed(decodedUrl)) {
+            window.location.href = decodedUrl;
+        } else {
+            document.getElementById("msg").innerText =
+                "Invalid or untrusted redirect URL.";
+        }
+    }
+
     setTimeout(() => {
         window.close();
-        // If window.close() failed, show the message
+
         setTimeout(() => {
-            document.getElementById("msg").innerText = "You can close this tab.";
+            document.getElementById("msg").innerText =
+                "You can close this tab.";
         }, 500);
     }, 5000);
 </script>
+
 </body>
 </html>
