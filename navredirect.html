@@ -1,17 +1,17 @@
+<!DOCTYPE html>
+<html>
+<body>
+<p id="msg">Opening NAV, please wait...</p>
 <script>
     const params = new URLSearchParams(window.location.search);
     const urlParam = params.get("url");
-
     const allowedHosts = [
         "a-cfs-nav.cfs.local"
     ];
-
     const allowedPort = "7146";
-
     function isAllowed(url) {
         try {
             const parsed = new URL(url);
-
             return (
                 parsed.protocol === "dynamicsnav:" &&
                 parsed.port === allowedPort &&
@@ -24,10 +24,8 @@
             return false;
         }
     }
-
     if (urlParam) {
         const decodedUrl = decodeURIComponent(urlParam);
-
         if (isAllowed(decodedUrl)) {
             window.location.href = decodedUrl;
         } else {
@@ -35,13 +33,13 @@
                 "Invalid or untrusted redirect URL.";
         }
     }
-
     setTimeout(() => {
         window.close();
-
         setTimeout(() => {
             document.getElementById("msg").innerText =
                 "You can close this tab.";
         }, 500);
     }, 5000);
 </script>
+</body>
+</html>
