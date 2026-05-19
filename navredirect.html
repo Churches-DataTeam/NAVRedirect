@@ -1,24 +1,24 @@
-<!DOCTYPE html>
-<html>
-<body>
-<h1 id="msg">Opening NAV, please wait...</h1>
-
 <script>
     const params = new URLSearchParams(window.location.search);
     const urlParam = params.get("url");
 
-    // ✅ List of allowed domains
-    const allowedDomains = [
-        "dynamicsnav://a-cfs-nav.cfs.local:7146"
+    const allowedHosts = [
+        "a-cfs-nav.cfs.local"
     ];
+
+    const allowedPort = "7146";
 
     function isAllowed(url) {
         try {
             const parsed = new URL(url);
 
-            return allowedDomains.some(domain =>
-                parsed.hostname === domain ||
-                parsed.hostname.endsWith("." + domain)
+            return (
+                parsed.protocol === "dynamicsnav:" &&
+                parsed.port === allowedPort &&
+                allowedHosts.some(host =>
+                    parsed.hostname === host ||
+                    parsed.hostname.endsWith("." + host)
+                )
             );
         } catch {
             return false;
@@ -45,6 +45,3 @@
         }, 500);
     }, 5000);
 </script>
-
-</body>
-</html>
